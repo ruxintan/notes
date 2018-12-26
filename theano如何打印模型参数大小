@@ -1,0 +1,14 @@
+网上找了很多关于theano如何打印出模型参数大小的，都不是特别完整。
+theano很久也不更新了所以相关博客也比较少。
+自己想了一个比较笨的方法，it works anyway。
+记录一下。
+            # print model parameter size for theano
+            x1 = [v[0] for v in self.state_updates]
+            x2 = [w[0] for w in self.updates]
+            result = x1 + x2
+            length = 0
+            for i in result:
+                length += i.container.data.size
+            logger.debug("Total parameter size:%d" ,length)
+            
+            关键点是找到模型update的参数，然后参数的container.data.size的大小提取出来即可。
